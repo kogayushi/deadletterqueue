@@ -1,0 +1,18 @@
+spring:
+  rabbitmq:
+    username: demo
+    password: demo
+    listener:
+      direct:
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          initial-interval: 1000ms
+          max-interval: 10000ms
+          multiplier: 1.0
+          max-attempts: 3
+        acknowledge-mode: manual
+
+      type: direct
+
+
