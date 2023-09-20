@@ -59,17 +59,12 @@ public class RabbitMQConfig {
     }
 
     @RabbitListener(queues = MESSAGES_QUEUE)
-    public Mono<String> receiveMessage(Message message) {
+    public Mono<String> receiveMessage(Message message) { // 返り値をMonoにするとdead letter queueに転送されない
         System.out.println("Received failed message, re-queueing: " + message.toString());
         System.out.println(
                 "Received failed message, re-queueing: " + message.getMessageProperties().getReceivedRoutingKey());
         throw new RuntimeException("fail");
     }
-
-//    @RabbitListener(queues = DLQ_MESSAGES_QUEUE)
-//    public void processFailedMessages(Message message) {
-//        System.out.println("Received failed message: " + message.toString());
-//    }
 
     @Bean
     public ApplicationRunner runner(
